@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Black Theater Page</title>
+    <meta
+      name="description"
+      content="Dim your other monitors with this all-black webpage and keep track with a timer to see how long it's been in theater mode."
+    />
+    <meta name="keywords" content="black, theater mode, timer, count up" />
+    <style>
+      body,
+      html {
+        background: black;
+      }
+      #timer {
+        color: #232323;
+        font-family: monospace;
+        font-size: 5em;
+        position: absolute;
+        right: 1em;
+        bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timer"></div>
+
+    <script>
+      var timerVar = setInterval(countTimer, 1000);
+      var totalSeconds = 0;
+      function countTimer() {
+        ++totalSeconds;
+        var hour = Math.floor(totalSeconds / 3600);
+        var minute = Math.floor((totalSeconds - hour * 3600) / 60);
+        var seconds = totalSeconds - (hour * 3600 + minute * 60);
+        if (hour < 10) hour = "0" + hour;
+        if (minute < 10) minute = "0" + minute;
+        if (seconds < 10) seconds = "0" + seconds;
+        document.getElementById("timer").innerHTML = hour + ":" + minute + ":" + seconds;
+      }
+
+      function toggleFullScreen() {
+        if (
+          (document.fullScreenElement && document.fullScreenElement !== null) ||
+          (!document.mozFullScreen && !document.webkitIsFullScreen)
+        ) {
+          if (document.documentElement.requestFullScreen) {
+            document.documentElement.requestFullScreen();
+          } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+          } else if (document.documentElement.webkitRequestFullScreen) {
+            document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+          }
+        } else {
+          if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+          }
+        }
+      }
+
+      document.addEventListener("click", function () {
+        // toggleFullScreen();
+      });
+    </script>
+  </body>
+</html>
